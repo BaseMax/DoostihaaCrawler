@@ -89,6 +89,12 @@ function parsePost(string $post_link) : ?array {
 	preg_match($regex, $data, $_date);
 	if (isset($_date[1])) $date = $_date[1];
 
+	// image
+	$image = null;
+	$regex = '/srcset=\"(https:\/\/www.doostihaa.com\/img\/uploads\/([^\" ]+))/i';
+	preg_match($regex, $data, $_image);
+	if (isset($_image[1])) $image = $_image[1];
+
 	// var_dump($title);
 	// var_dump($content);
 	// var_dump($tags);
@@ -96,6 +102,7 @@ function parsePost(string $post_link) : ?array {
 	var_dump($likes);
 	var_dump($dislikes);
 	var_dump($date);
+	var_dump($image);
 
 	$post = [];
 	$post["title"] = $title;
@@ -105,6 +112,7 @@ function parsePost(string $post_link) : ?array {
 	$post["likes"] = $likes;
 	$post["dislikes"] = $dislikes;
 	$post["date"] = $date;
+	$post["image"] = $image;
 
 	return $post;
 }
