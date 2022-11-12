@@ -18,6 +18,14 @@ function parsePage(int $page_index) : array {
 	return $matches[1];
 }
 
+function remove_style_scripts(string $content) : string {
+	// <script type="text/javascript">
+	$content = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $content);
+	// <style></style>
+	$content = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', "", $content);
+	return $content;
+}
+
 function parsePost(string $post_link) : ?array {
 	if (file_exists("cache/" . md5($post_link))) {
 		$data = file_get_contents("cache/". md5($post_link));
@@ -35,9 +43,11 @@ function parsePost(string $post_link) : ?array {
 
 	// content
 	$content = null;
-	$regex = '/<div class="article_txtc"><div class="textkian0">(.*?)<\/div><div class="tags_boxes">/si';
+	$regex = '/<div class="article_txtc"><div class="textkian0">(.*)<\/div><div class="tags_boxes">/si';
 	preg_match($regex, $data, $_content);
 	if (isset($_content[1])) $content = $_content[1];
+	$content = html_entity_decode($content);
+	$content = remove_style_scripts($content);
 
 	var_dump($title);
 	// var_dump($content);
