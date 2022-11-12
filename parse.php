@@ -83,12 +83,19 @@ function parsePost(string $post_link) : ?array {
 	preg_match($regex, $data, $_dislikes);
 	if (isset($_dislikes[1])) $dislikes = $_dislikes[1];
 
+	// date
+	$date = null;
+	$regex = '/<i class=\"fa fa-lg fa-clock-o\"><\/i><\/span> ([^\<]+)<\/li>/i';
+	preg_match($regex, $data, $_date);
+	if (isset($_date[1])) $date = $_date[1];
+
 	// var_dump($title);
 	// var_dump($content);
 	// var_dump($tags);
 	var_dump($views);
 	var_dump($likes);
 	var_dump($dislikes);
+	var_dump($date);
 
 	$post = [];
 	$post["title"] = $title;
@@ -97,6 +104,7 @@ function parsePost(string $post_link) : ?array {
 	$post["views"] = $views;
 	$post["likes"] = $likes;
 	$post["dislikes"] = $dislikes;
+	$post["date"] = $date;
 
 	return $post;
 }
