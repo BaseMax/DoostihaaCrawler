@@ -1,5 +1,7 @@
 <?php
 @mkdir("posts/");
+@mkdir("cache/");
+
 $link = "https://www.doostihaa.com/";
 $total_pages = 2285;
 
@@ -38,7 +40,7 @@ function parsePost(string $post_link) : ?array {
 	if (isset($_content[1])) $content = $_content[1];
 
 	var_dump($title);
-	var_dump($content);
+	// var_dump($content);
 
 	$post = [];
 	$post["title"] = $title;
