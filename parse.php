@@ -27,7 +27,8 @@ function remove_style_scripts(string $content) : string {
 }
 
 function parsePost(string $post_link) : ?array {
-	if (file_exists("cache/" . md5($post_link))) {
+	$cache_path = "cache/" . md5($post_link);
+	if (file_exists($cache_path) && file_get_contents($cache_path) !== "") {
 		$data = file_get_contents("cache/". md5($post_link));
 	} else {
 		$data = file_get_contents($post_link);
@@ -40,6 +41,8 @@ function parsePost(string $post_link) : ?array {
 	$regex = '/\">([^\<]+)<\/a>([\n\s]+|)<span class=\"biigli3/is';
 	preg_match($regex, $data, $_title);
 	if (isset($_title[1])) $title = $_title[1];
+
+	if ($title === null) return null;
 
 	// content
 	$content = null;
