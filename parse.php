@@ -139,8 +139,8 @@ for ($page = 1; $page <= $total_pages; $page++) {
 		if ($post !== null) {
 			savePost($post);
 		}
-		break;
+		// break;
 	}
 
-	exit();
+	// exit();
 }
